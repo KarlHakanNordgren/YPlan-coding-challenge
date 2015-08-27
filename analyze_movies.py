@@ -1,9 +1,4 @@
-
-################################################
-################################################
-############# 
-
-#!/usr/bin/python
+#!/usr/local/bin/python
 
 ################################################
 ################################################
@@ -70,27 +65,16 @@ def loadData(fileName, maxRow = -1):
 	return dataset;
 
 # ratings: The input file is in format UserID::MovieID::Rating::Timestamp
-ratingsFileName = u'C:\\work\\coding challenge\\data\\ml-1m\\ratings.dat'
+ratingsFileName = './ratings.dat'
 ratings = loadData(ratingsFileName, maxRow = -1)
 
 # users: The input file is in format UserID::Gender::Age::Occupation::Zip-code
-usersFileName = u'C:\\work\\coding challenge\\data\\ml-1m\\users.dat'
+usersFileName = './users.dat'
 users = loadData(usersFileName, maxRow = -1)
 
 # movies: The input file is in format MovieID::Title::Genres
-moviesFileName = u'C:\\work\\coding challenge\\data\\ml-1m\\movies.dat'
+moviesFileName = './movies.dat'
 movies = loadData(moviesFileName, maxRow = -1)
-
-'''
-users = [
-    ['M01', 'F', '23', 1, 1],
-    ['M02', 'F', '4', 1, 1],
-    ['M03', 'M', '45', 1, 1],
-	['M04', 'M', '3', 1, 1],
-]
-ratings = [['M01', 'A', 2, 3], ['M01', 'B', 3, 3], ['M03', 'C', 5, 3], ['M02', 'A', 4, 3]]
-movies = [['A', 'Hook', 3], ['B', 'Shrek', 3], ['C', 'Regardless', 3]]
-'''
 
 ################################################
 ################################################
@@ -107,7 +91,7 @@ for rating in ratings:
 	if rating[0] in usersDict:
 		userRating = list(rating) + list(usersDict.get(rating[0]))
 		userRatings.append(userRating)
-		
+                
 ################################################
 ################################################
 ############# 
@@ -137,32 +121,25 @@ for k, g in groupby(userRatingsSorted, idColumns):
 	row.append(numInGroup)
 	groupMeans.append(row)
 
-
 groupMeansSorted = sorted(groupMeans, key = itemgetter(1, 2, 3), reverse = True)
 
-movieDict = dict([(movie[0], movie[1:]) for movie in movies])
+movieDict = dict([(movie[0], movie[1:]) for movie in movies]) 
 
 for k, g in groupby(groupMeansSorted, itemgetter(1)):
-	##for item in g:
-	##	print(item)
-
-	###groupMeansOrder = sorted(groupMeans, key = itemgetter(2, 3), reverse = True)
 	topItemsInGroup = []
 	for i, item in enumerate(g):
 		if i < numCat:
 			topItemsInGroup.append(item)
 	topMovies = []
 	# topMovies has columns MovieID::grouping variable::mean rating::num ratings::Title::Genres
-	for item in topItemsInGroup:
+	for item in topItemsInGroup: # do inner join 
 		if item[0] in movieDict:
 			topMovie = list(item) + list(movieDict.get(item[0]))
 			topMovies.append(topMovie)
-	print('\n')
 	print('The top %s movies for %s = %s are:' %(numCat, varName, k))
 	print('\n')
 	for i, movie in enumerate(topMovies):
 		print('Movie %d: "%s"; score: %s; number of ratings: %d' %(i+1, movie[4], movie[2], movie[3]))
 	print('\n')
-	
 	
 	
