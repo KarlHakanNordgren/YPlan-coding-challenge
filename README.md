@@ -1,7 +1,7 @@
 # YPlan-coding-challenge
 YPlan coding challenge
 
-Hi Karl
+Hi 
 
 Thank you for applying to YPlan! The role of Data Scientist was updated earlier this week (following a review of the role) to include experience using Python as an essential requirement. 
 
@@ -34,5 +34,4 @@ I look forward to hearing from you :)
 
 Best,
 
-Clem Capel-Bird
 Talent Coordinator
